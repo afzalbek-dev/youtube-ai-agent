@@ -1,0 +1,19 @@
+services:
+  youtube-ai-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: youtube_ai_agent
+    environment:
+      - APP_ENV=production
+      - LOG_LEVEL=INFO
+      - DRY_RUN=true
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
+      - YOUTUBE_UPLOAD_ENABLED=false
+    volumes:
+      - ./output:/app/output
+      - ./temp:/app/temp
+    restart: unless-stopped
+    command: ["run", "--topic", "AI Revolution in 2026", "--dry-run"]
